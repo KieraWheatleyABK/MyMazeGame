@@ -1,6 +1,6 @@
 #pragma once
-#include "PlacableActor.h"
-class Money : public PlacableActor
+#include "PlaceableActor.h"
+class Money : public PlaceableActor
 {
 public:
 	Money(int x, int y, int worth);

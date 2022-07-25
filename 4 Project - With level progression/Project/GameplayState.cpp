@@ -144,7 +144,7 @@ bool GameplayState::Update(bool processInput)
 
 void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 {
-	PlacableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
+	PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
 	if (collidedActor != nullptr && collidedActor->IsActive())
 	{
 		switch (collidedActor->GetType())

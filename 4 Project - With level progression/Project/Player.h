@@ -1,9 +1,9 @@
 #pragma once
-#include "PlacableActor.h"
+#include "PlaceableActor.h"
 
 class Key;
 
-class Player : public PlacableActor
+class Player : public PlaceableActor
 {
 public:
 	Player();

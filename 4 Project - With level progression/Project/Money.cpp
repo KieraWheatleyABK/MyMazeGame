@@ -2,7 +2,7 @@
 #include "Money.h"
 
 Money::Money(int x, int y, int worth)
-	: PlacableActor(x, y)
+	: PlaceableActor(x, y)
 	, m_worth(worth)
 {
 

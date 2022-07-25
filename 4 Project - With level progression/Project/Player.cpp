@@ -9,7 +9,7 @@ using namespace std;
 constexpr int kStartingNumberOfLives = 3;
 
 Player::Player()
-	: PlacableActor(0, 0)
+	: PlaceableActor(0, 0)
 	, m_pCurrentKey(nullptr)
 	, m_money(0)
 	, m_lives(kStartingNumberOfLives)

@@ -2,7 +2,7 @@
 #include "Goal.h"
 
 Goal::Goal(int x, int y)
-	: PlacableActor(x, y)
+	: PlaceableActor(x, y)
 {
 	
 }

@@ -2,7 +2,7 @@
 #include <iostream>
 
 Enemy::Enemy(int x, int y, int deltaX, int deltaY)
-	: PlacableActor(x, y)
+	: PlaceableActor(x, y)
 	, m_currentMovementX(0)
 	, m_currentMovementY(0)
 	, m_directionX(0)

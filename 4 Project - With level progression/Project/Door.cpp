@@ -3,7 +3,7 @@
 #include "Door.h"
 
 Door::Door(int x, int y, ActorColor color, ActorColor closedColor)
-	: PlacableActor(x, y, color)
+	: PlaceableActor(x, y, color)
 	, m_isOpen(false)
 	, m_closedColor(closedColor)
 {

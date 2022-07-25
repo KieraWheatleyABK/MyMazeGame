@@ -30,7 +30,7 @@
     <ClCompile Include="Key.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlacableActor.cpp">
+    <ClCompile Include="PlaceableActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Door.cpp">
@@ -83,7 +83,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlacableActor.h">
+    <ClInclude Include="PlaceableActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Key.h">

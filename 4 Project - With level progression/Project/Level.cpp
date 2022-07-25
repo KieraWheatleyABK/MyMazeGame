@@ -200,9 +200,9 @@ int Level::GetIndexFromCoordinates(int x, int y)
 }
 
 // Updates all actors and returns a colliding actor if there is one
-PlacableActor* Level::UpdateActors(int x, int y)
+PlaceableActor* Level::UpdateActors(int x, int y)
 {
-	PlacableActor* collidedActor = nullptr;
+	PlaceableActor* collidedActor = nullptr;
 
 	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
 	{

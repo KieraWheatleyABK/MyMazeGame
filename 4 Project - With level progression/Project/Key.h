@@ -1,10 +1,10 @@
 #pragma once
-#include "PlacableActor.h"
-class Key : public PlacableActor
+#include "PlaceableActor.h"
+class Key : public PlaceableActor
 {
 public:
 	Key(int x, int y, ActorColor color)
-		: PlacableActor(x, y, color)
+		: PlaceableActor(x, y, color)
 	{
 
 	}

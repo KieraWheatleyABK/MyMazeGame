@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-class PlacableActor;
+class PlaceableActor;
 
 class Level
 {
@@ -10,7 +10,7 @@ class Level
 	int m_height;
 	int m_width;
 
-	std::vector<PlacableActor*> m_pActors;
+	std::vector<PlaceableActor*> m_pActors;
 
 public:
 	Level();
@@ -18,7 +18,7 @@ public:
 
 	bool Load(std::string levelName, int* playerX, int* playerY);
 	void Draw();
-	PlacableActor* UpdateActors(int x, int y);
+	PlaceableActor* UpdateActors(int x, int y);
 
 	bool IsSpace(int x, int y);
 	bool IsWall(int x, int y);
