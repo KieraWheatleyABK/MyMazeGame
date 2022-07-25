@@ -9,6 +9,7 @@
 #include "Key.h"
 #include "Door.h"
 #include "Money.h"
+#include "ExtraLife.h"
 #include "Goal.h"
 #include "AudioManager.h"
 #include "Utility.h"
@@ -33,6 +34,7 @@ GameplayState::GameplayState(StateMachineExampleGame* pOwner)
 	m_LevelNames.push_back("Level1.txt");
 	m_LevelNames.push_back("Level2.txt");
 	m_LevelNames.push_back("Level3.txt");
+	m_LevelNames.push_back("Level4.txt");
 }
 
 GameplayState::~GameplayState()
@@ -189,6 +191,16 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 			}
 			break;
 		}
+		case ActorType::ExtraLife:
+		{
+			ExtraLife* collidedExtraLife = dynamic_cast<ExtraLife*>(collidedActor);
+			assert(collidedExtraLife);
+			AudioManager::GetInstance()->PlayExtraLifePickupSound();
+			collidedExtraLife->Remove();
+			m_player.AddLives(collidedExtraLife->GetLife());
+			m_player.SetPosition(newPlayerX, newPlayerY);
+			break;
+		}	
 		case ActorType::Door:
 		{
 			Door* collidedDoor = dynamic_cast<Door*>(collidedActor);

@@ -62,6 +62,14 @@ public:
 		Beep(1568, 200);
 	}
 
+	void PlayExtraLifePickupSound()
+	{
+		if (!m_SoundOn)
+			return;
+		Beep(1568, 50);
+		Beep(1568, 100);
+	}
+
 	void PlayKeyDropSound()
 	{
 		if (!m_SoundOn)

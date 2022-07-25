@@ -19,7 +19,8 @@ enum class ActorType
 	Goal,
 	Key,
 	Money,
-	Player
+	Player,
+	ExtraLife
 };
 
 class PlaceableActor
