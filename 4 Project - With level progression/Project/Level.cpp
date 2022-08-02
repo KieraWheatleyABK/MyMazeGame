@@ -213,6 +213,11 @@ PlaceableActor* Level::UpdateActors(int x, int y)
 	{
 		(*actor)->Update(); // Update all actors
 
+		if (!(*actor)->IsActive())
+		{
+			continue;
+		}
+
 		if (x == (*actor)->GetXPosition() && y == (*actor)->GetYPosition())
 		{
 			// should only be able to collide with one actor

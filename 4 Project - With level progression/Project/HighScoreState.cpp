@@ -19,10 +19,15 @@ bool HighScoreState::Update(bool processInput)
 {
 	if (processInput)
 	{
-		int input = _getch();
-		m_pOwner->LoadScene(StateMachineExampleGame::SceneName::MainMenu);
+		ProcessInput();
 	}
 	return false;
+}
+
+void HighScoreState::ProcessInput()
+{
+	int input = _getch();
+	m_pOwner->LoadScene(StateMachineExampleGame::SceneName::MainMenu);
 }
 
 void HighScoreState::Draw()

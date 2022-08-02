@@ -16,7 +16,7 @@ class GameplayState : public GameState
 	Player m_player;
 	Level* m_pLevel;
 
-	bool m_beatLevel;
+	bool m_didBeatLevel;
 	int m_skipFrameCount;
 	static constexpr int kFramesToSkip = 2;
 
@@ -32,8 +32,13 @@ public:
 	virtual bool Update(bool processInput = true) override;
 	virtual void Draw() override;
 
+protected:
+	void ProcessInput() override;
+	void CheckBeatLevel();
+
 private:
 	void HandleCollision(int newPlayerX, int newPlayerY);
+	void HandleActors(PlaceableActor* actor, int newX, int newY);
 	bool Load();
 	void DrawHUD(const HANDLE& console);
 };
