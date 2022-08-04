@@ -6,6 +6,9 @@
 #include <windows.h>
 #include <vector>
 #include <string>
+#include <mutex>
+
+using std::mutex;
 
 class StateMachineExampleGame;
 
@@ -37,8 +40,13 @@ protected:
 	void CheckBeatLevel();
 
 private:
-	void HandleCollision(int newPlayerX, int newPlayerY);
+	void HandleCollision(int newPlayerX, int newPlayerY, bool processInput = false);
 	void HandleActors(PlaceableActor* actor, int newX, int newY);
 	bool Load();
 	void DrawHUD(const HANDLE& console);
+	void RunCollisionThread();
+	void RunProcessInputThread();
+
+	mutex m_drawMutex;
+	mutex m_handleColMutex;
 };

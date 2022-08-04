@@ -19,6 +19,7 @@ public:
 	bool Load(std::string levelName, int* playerX, int* playerY);
 	void Draw();
 	PlaceableActor* UpdateActors(int x, int y);
+	PlaceableActor* GetCollidedActor(int x, int y);
 
 	bool IsSpace(int x, int y);
 	bool IsWall(int x, int y);

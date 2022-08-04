@@ -4,6 +4,9 @@
 #include <conio.h>
 #include <windows.h>
 #include <assert.h>
+#include <thread>
+#include <mutex>
+#include <chrono>
 
 #include "Enemy.h"
 #include "Key.h"
@@ -111,7 +114,7 @@ void GameplayState::ProcessInput()
 	}
 	else
 	{
-		HandleCollision(newPlayerX, newPlayerY);
+		HandleCollision(newPlayerX, newPlayerY, true);
 	}
 }
 
@@ -142,11 +145,35 @@ void GameplayState::CheckBeatLevel()
 	}
 }
 
-bool GameplayState::Update(bool processInput)
+void GameplayState::RunCollisionThread()
 {
-	if (processInput && !m_didBeatLevel)
+	while (!m_didBeatLevel && m_player.GetLives() >= 0)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(500));
+		HandleCollision(m_player.GetXPosition(), m_player.GetYPosition());
+		Draw();
+	}
+}
+
+void GameplayState::RunProcessInputThread()
+{
+	while (!m_didBeatLevel && m_player.GetLives() >= 0)
 	{
 		ProcessInput();
+		Draw();
+	}
+}
+
+bool GameplayState::Update(bool processInput)
+{
+	// rename var
+	if (processInput && !m_didBeatLevel)
+	{
+		std::thread helper(&GameplayState::RunCollisionThread, this);
+		std::thread helper1(&GameplayState::RunProcessInputThread, this);
+
+		helper.join();
+		helper1.join();
 	}
 
 	CheckBeatLevel();
@@ -154,20 +181,34 @@ bool GameplayState::Update(bool processInput)
 	return false;
 }
 
-void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
+void GameplayState::HandleCollision(int newPlayerX, int newPlayerY, bool processInput)
 {
-	PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
-	if (collidedActor != nullptr)
+	const std::lock_guard<std::mutex> lock(m_handleColMutex);
+
+	if (processInput)
 	{
-		HandleActors(collidedActor, newPlayerX, newPlayerY);
+		PlaceableActor* actor = m_pLevel->GetCollidedActor(newPlayerX, newPlayerY);
+		if (actor != nullptr)
+		{
+			HandleActors(actor, newPlayerX, newPlayerY);
+		}
+		else if (m_pLevel->IsSpace(newPlayerX, newPlayerY)) // no collision
+		{
+			m_player.SetPosition(newPlayerX, newPlayerY);
+		}
+		else if (m_pLevel->IsWall(newPlayerX, newPlayerY))
+		{
+			// wall collision, do nothing
+		}
 	}
-	else if (m_pLevel->IsSpace(newPlayerX, newPlayerY)) // no collision
+	else
 	{
-		m_player.SetPosition(newPlayerX, newPlayerY);
-	}
-	else if (m_pLevel->IsWall(newPlayerX, newPlayerY))
-	{
-		// wall collision, do nothing
+		PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
+		if (collidedActor != nullptr)
+		{
+			HandleActors(collidedActor, newPlayerX, newPlayerY);
+		}
+		
 	}
 }
 
@@ -264,6 +305,8 @@ void GameplayState::HandleActors(PlaceableActor* actor, int newX, int newY)
 
 void GameplayState::Draw()
 {
+	const std::lock_guard<std::mutex> lock(m_drawMutex);
+
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 	system("cls");
 

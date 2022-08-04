@@ -225,6 +225,21 @@ PlaceableActor* Level::UpdateActors(int x, int y)
 			collidedActor = (*actor);
 		}
 	}
+	return collidedActor;
+}
 
+PlaceableActor* Level::GetCollidedActor(int x, int y)
+{
+	PlaceableActor* collidedActor = nullptr;
+
+	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
+	{
+		if (x == (*actor)->GetXPosition() && y == (*actor)->GetYPosition())
+		{
+			// should only be able to collide with one actor
+			assert(collidedActor == nullptr);
+			collidedActor = (*actor);
+		}
+	}
 	return collidedActor;
 }
